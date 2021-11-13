@@ -3,7 +3,10 @@ let noteText;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
+// activeNote is used to keep track of the note in the textarea
+let activeNote = {};
 
+// if on the notes page, build it
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
@@ -16,14 +19,10 @@ if (window.location.pathname === '/notes') {
 const show = (elem) => {
   elem.style.display = 'inline';
 };
-
 // Hide an element
 const hide = (elem) => {
   elem.style.display = 'none';
 };
-
-// activeNote is used to keep track of the note in the textarea
-let activeNote = {};
 
 const getNotes = () =>
   fetch('/api/notes', {
@@ -31,7 +30,10 @@ const getNotes = () =>
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+})
+.then((response) => {
+})
+
 
 const saveNote = (note) =>
   fetch('/api/notes', {
@@ -40,7 +42,15 @@ const saveNote = (note) =>
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(note),
-  });
+})
+.then((response) => response.json())
+.then((data) => {
+  alert(data);
+  //createCard(note);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
 
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
@@ -48,7 +58,7 @@ const deleteNote = (id) =>
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+});
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
@@ -155,7 +165,7 @@ const renderNoteList = async (notes) => {
   };
 
   if (jsonNotes.length === 0) {
-    noteListItems.push(createLi('No saved Notes', false));
+    noteListItems.push(createLi('No saved Notes', true));
   }
 
   jsonNotes.forEach((note) => {
