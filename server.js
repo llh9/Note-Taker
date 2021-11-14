@@ -13,6 +13,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'public/pages/notes.html')));
+app.post('/notes', (req, res) => {
+    if(req.body.title && req.body.text){
+        alert('noticed');
+        const nuNote = {
+            "title": req.body.title, 
+            "text": req.body.text
+        }
+        JSON.parse(res.json(db)).push(nuNote);
+        console.log(res.json(db));
+    }
+});
+
 
 app.get('/api/notes', (req, res) => { res.json(db) });
 

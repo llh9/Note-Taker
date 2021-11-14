@@ -4,7 +4,32 @@
         "text": "Test text"
     },
     {
+<<<<<<< HEAD
         "title": "new",
         "text": "sdlkjafspije"
+=======
+        "title": "nu ",
+        "text": "new\n"
+    },
+    {
+        "title": "last ",
+        "text": "i think sheesh"
+    },
+    {
+        "title": "new",
+        "text": "noo"
+    },
+    {
+        "title": "juk",
+        "text": "lkjdlkjjndlloedlkjslkijslejfjlaksjdpfj'NWEOEFH0243RJFOEJRJHFO[WIEHJF3"
+    },
+    {
+        "title": "node",
+        "text": "js"
+    },
+    {
+        "title": "nu",
+        "text": "bku"
+>>>>>>> 1c8f1eee4847277b0c6648383fa8826615169ca1
     }
 ]

@@ -24,6 +24,7 @@ const hide = (elem) => {
   elem.style.display = 'none';
 };
 
+<<<<<<< HEAD
 const getNotes = () =>
   fetch('/api/notes', {
     method: 'GET',
@@ -31,6 +32,17 @@ const getNotes = () =>
       'Content-Type': 'application/json',
     },
 })
+=======
+const getNotes = async () => {
+  const result = await fetch('/api/notes', {
+    method: 'GET'
+  })
+  const json = await result.json();
+  return json;
+};
+
+
+>>>>>>> 1c8f1eee4847277b0c6648383fa8826615169ca1
 
 const saveNote = (note) =>
   fetch('/api/notes', {
@@ -40,11 +52,14 @@ const saveNote = (note) =>
     },
     body: JSON.stringify(note),
 })
+<<<<<<< HEAD
 .then((response) => response.json())
 .then((data) => {
   alert(data);
   console.info(`${note}`);
 })
+=======
+>>>>>>> 1c8f1eee4847277b0c6648383fa8826615169ca1
 .catch((error) => {
   console.error('Error:', error);
 });
@@ -125,10 +140,11 @@ const handleRenderSaveBtn = () => {
 };
 
 // Render the list of note titles
-const renderNoteList = async (notes) => {
-  let jsonNotes = await notes.json();
+const renderNoteList = (notes) => {
+  let jsonNotes =  notes.json();
   if (window.location.pathname === '/notes') {
-    noteList.forEach((el) => (el.innerHTML = ''));
+    noteList.forEach((el) => (el.innerHTML = notes.json().title));
+
   }
 
   let noteListItems = [];
@@ -179,7 +195,7 @@ const renderNoteList = async (notes) => {
 };
 
 // Gets notes from the db and renders them to the sidebar
-const getAndRenderNotes = () => getNotes().then(renderNoteList);
+const getAndRenderNotes = () => getNotes().then(renderNoteList());
 
 if (window.location.pathname === '/notes') {
   saveNoteBtn.addEventListener('click', handleNoteSave);
