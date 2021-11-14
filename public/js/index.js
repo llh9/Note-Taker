@@ -29,7 +29,6 @@ const getNotes = async () => {
     method: 'GET'
   })
   const json = await result.json();
-  let jsonNotes = await json;
   return json;
 };
 
@@ -43,7 +42,6 @@ const saveNote = (note) =>
     },
     body: JSON.stringify(note),
 })
-
 .catch((error) => {
   console.error('Error:', error);
 });
@@ -123,7 +121,8 @@ const handleRenderSaveBtn = () => {
 };
 
 // Render the list of note titles
-const renderNoteList = async (notes) => {
+const renderNoteList = (notes) => {
+  let jsonNotes =  notes.json();
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = notes.json().title));
 
@@ -160,9 +159,9 @@ const renderNoteList = async (notes) => {
     return liEl;
   };
 
-  // if (jsonNotes.length === 0) {
-  //   noteListItems.push(createLi('No saved Notes', true));
-  // }
+  if (jsonNotes.length === 0) {
+    noteListItems.push(createLi('No saved Notes', true));
+  }
 
   jsonNotes.forEach((note) => {
     const li = createLi(note.title);
