@@ -24,15 +24,15 @@ const hide = (elem) => {
   elem.style.display = 'none';
 };
 
-const getNotes = () =>
-  fetch('/api/notes', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-})
-.then((response) => {
-})
+const getNotes = async () => {
+  const result = await fetch('/api/notes', {
+    method: 'GET'
+  })
+  const json = await result.json();
+  let jsonNotes = await json;
+  return json;
+};
+
 
 
 const saveNote = (note) =>
@@ -43,11 +43,7 @@ const saveNote = (note) =>
     },
     body: JSON.stringify(note),
 })
-.then((response) => response.json())
-.then((data) => {
-  alert(data);
-  //createCard(note);
-})
+
 .catch((error) => {
   console.error('Error:', error);
 });
@@ -128,9 +124,9 @@ const handleRenderSaveBtn = () => {
 
 // Render the list of note titles
 const renderNoteList = async (notes) => {
-  let jsonNotes = await notes.json();
   if (window.location.pathname === '/notes') {
-    noteList.forEach((el) => (el.innerHTML = ''));
+    noteList.forEach((el) => (el.innerHTML = notes.json().title));
+
   }
 
   let noteListItems = [];
@@ -164,9 +160,9 @@ const renderNoteList = async (notes) => {
     return liEl;
   };
 
-  if (jsonNotes.length === 0) {
-    noteListItems.push(createLi('No saved Notes', true));
-  }
+  // if (jsonNotes.length === 0) {
+  //   noteListItems.push(createLi('No saved Notes', true));
+  // }
 
   jsonNotes.forEach((note) => {
     const li = createLi(note.title);
@@ -181,7 +177,7 @@ const renderNoteList = async (notes) => {
 };
 
 // Gets notes from the db and renders them to the sidebar
-const getAndRenderNotes = () => getNotes().then(renderNoteList);
+const getAndRenderNotes = () => getNotes().then(renderNoteList());
 
 if (window.location.pathname === '/notes') {
   saveNoteBtn.addEventListener('click', handleNoteSave);
