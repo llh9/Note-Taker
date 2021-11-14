@@ -40,8 +40,7 @@ app.post('/api/notes', (req, res) => {
     if (req.body && req.body.title && req.body.text) {
         console.info(`${req.method} request received to upvote a review`);
         let newData = req.body;
-        update(newData, './db/db.json')
-        
+        update(newData, './db/db.json');
     }else {
         res.status(500).json('Review ID not found');
     }

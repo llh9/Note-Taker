@@ -31,9 +31,6 @@ const getNotes = () =>
       'Content-Type': 'application/json',
     },
 })
-.then((response) => {
-})
-
 
 const saveNote = (note) =>
   fetch('/api/notes', {
@@ -46,7 +43,7 @@ const saveNote = (note) =>
 .then((response) => response.json())
 .then((data) => {
   alert(data);
-  //createCard(note);
+  console.info(`${note}`);
 })
 .catch((error) => {
   console.error('Error:', error);
@@ -81,7 +78,8 @@ const handleNoteSave = () => {
     title: noteTitle.value,
     text: noteText.value,
   };
-  saveNote(newNote).then(() => {
+  saveNote(newNote)
+  .then(() => {
     getAndRenderNotes();
     renderActiveNote();
   });
